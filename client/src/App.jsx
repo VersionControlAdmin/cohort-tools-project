@@ -13,7 +13,6 @@ import StudentEditPage from "./pages/StudentEditPage";
 import UserProfilePage from "./pages/UserProfilePage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
-
 import IsPrivate from "./components/IsPrivate";
 import IsAnon from "./components/IsAnon";
 

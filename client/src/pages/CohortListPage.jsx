@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import CohortFilterBar from "../components/CohortFilterBar";
 import CohortCard from "../components/CohortCard";
+import CorsTestComponents from "../components/CorsTestComponent";
+
 
 // Import the string from the .env with URL of the API/server - http://localhost:5005
 const API_URL = import.meta.env.VITE_API_URL;
@@ -43,6 +45,7 @@ function CohortListPage() {
 
   return (
     <div className="CohortListPage">
+      <CorsTestComponents/>
       <CohortFilterBar
         campusQuery={campusQuery}
         setCampusQuery={setCampusQuery}

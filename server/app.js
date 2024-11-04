@@ -7,11 +7,16 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const Student = require("./models/Students.model");
 const Cohort = require("./models/Cohorts.model");
+const User = require("./models/User.model");
 const {
   errorHandler,
   notFoundHandler,
 } = require("./middleware/error-handling.middleware");
 const PORT = 5005;
+const auth = require("./routes/auth.routes");
+require("dotenv").config();
+
+const { isAuthenticated } = require("./middleware/jwt.middleware"); // <== IMPORT
 
 console.log(Student, Cohort);
 // STATIC DATA
@@ -42,6 +47,10 @@ mongoose
 // ROUTES - https://expressjs.com/en/starter/basic-routing.html
 // Devs Team - Start working on the routes here:
 // ...
+
+// routes to auth
+app.use("/auth", auth);
+
 app.get("/docs", (req, res) => {
   res.sendFile(__dirname + "/views/docs.html");
 });
@@ -190,6 +199,14 @@ app.delete("/api/students/:studentId", (req, res, next) => {
   Student.findByIdAndDelete(studentId)
     .then(() => res.status(200).json("Deleted successfully" + studentId))
     .catch((error) => next(error));
+});
+
+//CRUD for User Operations
+app.get("/api/users/:id", isAuthenticated, (req, res, next) => {
+  const { id } = req.params;
+  User.findById(id)
+    .then((user) => res.status(200).json(user))
+    .catch((error) => res.status(500).json(error));
 });
 
 //Error Handling Middleware
